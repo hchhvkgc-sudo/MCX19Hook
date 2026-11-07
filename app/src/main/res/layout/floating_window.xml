@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <!-- 主悬浮按钮 -->
+    <ImageButton
+        android:id="@+id/btn_toggle"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_floating_button"
+        android:src="@drawable/ic_mcx19hook"
+        android:contentDescription="MCX19Hook Menu"
+        android:scaleType="centerInside"
+        android:padding="12dp" />
+
+    <!-- 展开菜单 -->
+    <LinearLayout
+        android:id="@+id/menu_layout"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="70dp"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:background="@drawable/bg_menu_panel"
+        android:elevation="8dp"
+        android:padding="12dp">
+
+        <!-- 标题栏 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="MCX19Hook v1.21.0"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF" />
+
+            <ImageButton
+                android:id="@+id/btn_close"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                android:contentDescription="Close" />
+        </LinearLayout>
+
+        <!-- 功能开关列表 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="500dp"
+            android:fillViewport="false">
+
+            <LinearLayout
+                android:id="@+id/features_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="4dp" />
+        </ScrollView>
+
+        <!-- 底部状态 -->
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="Status: Ready"
+            android:textSize="12sp"
+            android:textColor="#AAFFFFFF" />
+    </LinearLayout>
+
+    <!-- ESP 绘制画布 -->
+    <ImageView
+        android:id="@+id/canvas_esp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:visibility="visible" />
+
+</FrameLayout>

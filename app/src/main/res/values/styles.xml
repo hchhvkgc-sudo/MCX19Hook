@@ -1,0 +1,18 @@
+<resources>
+    <style name="Theme.Transparent" parent="android:Theme.Translucent.NoTitleBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="Widget.MCX19Hook.Switch" parent="android:Widget.CompoundButton.Switch">
+        <item name="android:thumbTint">@color/switch_thumb</item>
+        <item name="android:trackTint">@color/switch_track</item>
+    </style>
+
+    <style name="Widget.MCX19Hook.SeekBar" parent="android:Widget.SeekBar">
+        <item name="android:progressTint">@color/accent_cyan</item>
+        <item name="android:thumbTint">@color/accent_cyan</item>
+    </style>
+</resources>

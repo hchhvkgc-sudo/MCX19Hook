@@ -1,0 +1,23 @@
+# Build outputs
+build/
+.gradle/
+local.properties
+*.apk
+*.aar
+*.so
+*.jar
+*.class
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large native libs (已预编译)
+app/build/intermediates/jniLibs/
+app/libs/*.jar

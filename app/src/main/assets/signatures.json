@@ -1,0 +1,92 @@
+[
+  {
+    "name": "GetLocalPlayer",
+    "pattern": "F3 03 00 AA F4 03 00 AA F5 03 00 AA F6 03 00 AA F7 03 00 AA F8 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "GetEntityList",
+    "pattern": "E8 03 00 AA E9 03 00 AA EA 03 00 AA EB 03 00 AA EC 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "GetViewMatrix",
+    "pattern": "08 00 80 52 09 00 A0 52 0A 00 C0 52 0B 00 E0 52",
+    "offset": -16,
+    "relative": true
+  },
+  {
+    "name": "RenderEntity",
+    "pattern": "F0 03 00 AA F1 03 00 AA F2 03 00 AA F3 03 00 AA F4 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "UpdateMovement",
+    "pattern": "2D 00 80 52 2E 00 A0 52 2F 00 C0 52 30 00 E0 52",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "HandlePacket",
+    "pattern": "E0 03 00 AA E1 03 00 AA E2 03 00 AA E3 03 00 AA E4 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "SendPacket",
+    "pattern": "C0 03 00 AA C1 03 00 AA C2 03 00 AA C3 03 00 AA C4 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "DamageEntity",
+    "pattern": "A0 03 00 AA A1 03 00 AA A2 03 00 AA A3 03 00 AA A4 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "SetHealth",
+    "pattern": "80 03 00 AA 81 03 00 AA 82 03 00 AA 83 03 00 AA 84 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "AddItem",
+    "pattern": "60 03 00 AA 61 03 00 AA 62 03 00 AA 63 03 00 AA 64 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "ConsumeItem",
+    "pattern": "40 03 00 AA 41 03 00 AA 42 03 00 AA 43 03 00 AA 44 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "CanFly",
+    "pattern": "20 03 00 AA 21 03 00 AA 22 03 00 AA 23 03 00 AA 24 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "IsInCreative",
+    "pattern": "00 03 00 AA 01 03 00 AA 02 03 00 AA 03 03 00 AA 04 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "PlayerTick",
+    "pattern": "E8 03 00 AA E9 03 00 AA EA 03 00 AA EB 03 00 AA EC 03 00 AA",
+    "offset": 0,
+    "relative": false
+  },
+  {
+    "name": "BlockBreakPacket",
+    "pattern": "10 00 00 94 11 00 00 94 12 00 00 94 13 00 00 94",
+    "offset": 0,
+    "relative": false
+  }
+]

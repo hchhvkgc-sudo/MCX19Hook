@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="switch_thumb">#00FFFF</color>
+    <color name="switch_track">#3300FFFF</color>
+    <color name="bg_dark">#1A1A2E</color>
+    <color name="bg_card">#CC1A1A2E</color>
+    <color name="accent_cyan">#00FFFF</color>
+    <color name="accent_green">#00FF00</color>
+    <color name="accent_red">#FF0044</color>
+    <color name="accent_yellow">#FFCC00</color>
+    <color name="accent_magenta">#FF00FF</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAFFFFFF</color>
+    <color name="text_accent">#00FFFF</color>
+</resources>

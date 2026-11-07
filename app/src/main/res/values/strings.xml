@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MCX19Hook</string>
+    <string name="module_name">MCX19Hook</string>
+    <string name="module_description">网易我的世界(com.netease.x19) LSPosed功能模块 - 透视/自瞄/飞行/无敌/物品管理/网络包控制</string>
+</resources>
