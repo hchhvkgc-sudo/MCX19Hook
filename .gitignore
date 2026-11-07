@@ -22,3 +22,4 @@ Thumbs.db
 app/build/intermediates/jniLibs/
 app/libs/*.jar
 tools/sdk-tools.zip
+tools/sdk-tools.zip
