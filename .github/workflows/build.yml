@@ -9,92 +9,73 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 120
-    
+
     steps:
       - uses: actions/checkout@v4
-      
-      # 设置 Java 17
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
           cache: gradle
-      
-      # 安装 Android SDK - 使用缓存避免重复下载
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          api-level: 34
-          ndk-version: r27c
-          build-tools-version: 34.0.0
-      
-      # 配置 Gradle 使用阿里云镜像（解决依赖下载慢）
-      - name: Configure Gradle Mirrors
+
+      - name: Install Android command-line-tools
         run: |
-          mkdir -p ~/.gradle
-          cat > ~/.gradle/init.gradle << 'EOF'
-          allprojects {
-              repositories {
-                  maven { url 'https://maven.aliyun.com/repository/google' }
-                  maven { url 'https://maven.aliyun.com/repository/public' }
-                  maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-                  maven { url 'https://maven.aliyun.com/repository/central' }
-                  mavenCentral()
-              }
-          }
-          EOF
-      
-      # 缓存 Gradle 和 Android SDK，避免重复下载
+          set -e
+          mkdir -p ~/android-sdk/cmdline-tools
+          cd ~/android-sdk
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          unzip -q commandlinetools-linux-11076708_latest.zip -d tmpdir
+          mv tmpdir/cmdline-tools ./cmdline-tools/latest
+          rm -rf tmpdir commandlinetools-linux-11076708_latest.zip
+
+          export ANDROID_HOME=~/android-sdk
+          export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
+          timeout 20 yes | sdkmanager --sdk_root="${ANDROID_HOME}" --licenses || true
+
+          sdkmanager --sdk_root="${ANDROID_HOME}" "platforms;android-34"
+          sdkmanager --sdk_root="${ANDROID_HOME}" "build-tools;34.0.0"
+          sdkmanager --sdk_root="${ANDROID_HOME}" "ndk;27.0.12077973"
+          sdkmanager --sdk_root="${ANDROID_HOME}" "platform-tools"
+
       - uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
             ~/.android
-            /usr/local/lib/android/sdk
-          key: ${{ runner.os }}-android-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-android-
-      
-      # 多源下载 LSPosed API，设置超时和重试
-      - name: Download LSPosed API
-        run: |
-          mkdir -p app/libs
-          # 尝试多个源，每个最多等待 2 分钟
-          for url in \
-            "https://mirrors.tuna.tsinghua.edu.cn/github-release/LSPosed/LSPosed/v1.9.2/lsposed-api-1.9.2.jar" \
-            "https://github.com/LSPosed/LSPosed/releases/download/v1.9.2/lsposed-api-1.9.2.jar" \
-            "https://jitpack.io/com/github/LSPosed/LSPosed/lsposed-api/1.9.2/lsposed-api-1.9.2.jar" \
-            "https://repo1.maven.org/maven2/org/lsposed/lsposed-api/1.9.2/lsposed-api-1.9.2.jar"; do
-            echo "Trying: $url"
-            if curl -fL --connect-timeout 30 --max-time 120 --retry 3 --retry-delay 5 -o app/libs/lsposed-api-1.9.2.jar "$url"; then
-              echo "Download succeeded from $url"
-              exit 0
-            fi
-          done
-          echo "All download sources failed"
-          exit 1
-      
+            ~/android-sdk
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Verify LSPosed JAR
+        run: ls -la app/libs/lsposed-api-1.9.2.jar
+
       - name: Setup Keystore
         if: env.KEYSTORE_BASE64 != ''
-        run: echo "$KEYSTORE_BASE64" | base64 -d > keystore/release.keystore
+        run: |
+          mkdir -p keystore
+          echo "$KEYSTORE_BASE64" | base64 -d > keystore/release.keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-      
+
       - name: Setup Gradle Wrapper
         run: |
           chmod +x gradlew 2>/dev/null || true
           ./gradlew wrapper --gradle-version 8.5 --distribution-type bin
           chmod +x gradlew
-      
-      # 使用离线模式构建，避免网络请求
+
       - name: Build Release APK
-        run: ./gradlew assembleRelease --offline --no-daemon -x lint
+        run: ./gradlew assembleRelease --no-daemon -x lint
         env:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-      
+
       - uses: actions/upload-artifact@v4
         if: success()
         with:
