@@ -21,3 +21,4 @@ Thumbs.db
 # Large native libs (已预编译)
 app/build/intermediates/jniLibs/
 app/libs/*.jar
+tools/sdk-tools.zip
