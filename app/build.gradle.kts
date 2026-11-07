@@ -20,13 +20,13 @@ android {
                     "-fstack-protector-strong", "-D_FORTIFY_SOURCE=2",
                     "-Wno-unused-parameter", "-Wno-write-strings"
                 ))
-                abiFilters.addAll(listOf("arm64-v8a"))
+                arguments(mapOf(
+                    "ANDROID_STL" to "c++_shared",
+                    "ANDROID_TOOLCHAIN" to "clang"
+                ))
+                abiFilters.addAll(listOf("arm64-v8a", "armeabi-v7a", "x86_64"))
             }
         }
-    }
-
-    buildFeatures {
-        buildConfig = true
     }
 
     buildTypes {
@@ -43,6 +43,13 @@ android {
             isMinifyEnabled = false
             isShrinkResources = false
             buildConfigField("boolean", "IS_DEBUG", "true")
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/jni/CMakeLists.txt")
+            version = "3.22.1"
         }
     }
 
