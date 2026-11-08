@@ -24,3 +24,7 @@ app/libs/*.jar
 tools/sdk-tools.zip
 tools/sdk-tools.zip
 tools/sdk-tools.zip
+tools/jdk-17/
+tools/*.tar.gz
+tools/jdk-17/
+tools/*.tar.gz
